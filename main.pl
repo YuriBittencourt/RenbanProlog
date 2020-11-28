@@ -63,3 +63,5 @@ matrizsecundaria(3, [[0, 0, 1, 1, 1, 1, 1, 2, 2],
                     [25, 25, 26, 27, 28, 29, 30, 31, 32],
                     [25, 25, 26, 33, 28, 34, 30, 31, 32],
                     [25, 25, 35, 35, 34, 34, 30, 31, 36]]).
+
+numGrupos(I, Max) :- matrizsecundaria(I, M), flatten(M, L), max_list(L, Max1), Max is Max1 + 1.
