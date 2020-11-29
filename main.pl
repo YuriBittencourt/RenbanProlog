@@ -6,6 +6,6 @@ getGrupoElem(Id, I, J, Elemento) :- matrizsecundaria(Id, M), nth0(I, M, L), nth0
 
 getElemento(M, I, J, Elemento) :- nth0(I, M, L), nth0(J, L, Elemento).
 
-getGrupo(Id, M, Elem, Grupo) :- findall(Elemento, (getElemento(M, I, J, Elemento), getGrupoElem(Id, I, J, Elem), Elemento \= 0), Grupo).
+getGrupo(Id, M, nroGrupo, Grupo) :- findall(Elemento, (getElemento(M, I, J, Elemento), getGrupoElem(Id, I, J, nroGrupo), Elemento \= 0), Grupo).
 
 % getM(Id, Elemento) :- matrizprimaria(Id, M), getElemento(M, 2, 0, Elemento).
