@@ -25,3 +25,19 @@ eh_sequencia([X, Y|Xs]) :- X + 1 #= Y, eh_sequencia([Y|Xs]).
 
 % Ordena um grupo e chama eh_sequencia
 sequenciaValida(Grupo) :- sort(Grupo, GrupoOrdenado), eh_sequencia(GrupoOrdenado).
+
+renban(Id, Mp) :- n(Id, N), length(Mp, N),
+                 maplist(same_length(Mp), Mp),
+                 append(Mp, Vs), Vs ins 1..N,
+                 maplist(all_distinct, Mp),
+                 transpose(Mp, MpColunas),
+                 maplist(all_distinct, MpColunas),
+                 Mp = [As, Bs, Cs, Ds, Es, Fs, Gs, Hs, Is],
+                 blocks(As, Bs, Cs),
+                 blocks(Ds, Es, Fs),
+                 blocks(Gs, Hs, Is).
+
+blocks([], [], []).
+blocks([N1,N2,N3|Ns1], [N4,N5,N6|Ns2], [N7,N8,N9|Ns3]) :-
+        all_distinct([N1,N2,N3,N4,N5,N6,N7,N8,N9]),
+        blocks(Ns1, Ns2, Ns3).
