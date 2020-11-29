@@ -66,8 +66,10 @@ matrizsecundaria(3, [[0, 0, 1, 1, 1, 1, 1, 2, 2],
 
 numGrupos(I, Max) :- matrizsecundaria(I, M), flatten(M, L), max_list(L, Max1), Max is Max1 + 1.
 
-getGrupo(Id, I, J, Elemento) :- matrizsecundaria(Id, M), nth0(I, M, L), nth0(J, L, Elemento).
+getGrupoElem(Id, I, J, Elemento) :- matrizsecundaria(Id, M), nth0(I, M, L), nth0(J, L, Elemento).
 
 getElemento(M, I, J, Elemento) :- nth0(I, M, L), nth0(J, L, Elemento).
+
+getGrupo(Id, M, Elem, Grupo) :- findall(Elemento, (getElemento(M, I, J, Elemento), getGrupoElem(Id, I, J, Elem), Elemento \= 0), Grupo).
 
 % getM(Id, Elemento) :- matrizprimaria(Id, M), getElemento(M, 2, 0, Elemento).
