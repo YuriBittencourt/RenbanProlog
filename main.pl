@@ -3,19 +3,19 @@
 
 
 % Retorna o número de grupos do puzzle
-numGrupos(I, Max) :- matrizsecundaria(I, M), flatten(M, L), max_list(L, Max1), Max is Max1 + 1.
+numGrupos(I, Max) :- matrizsecundaria(I, Matriz), flatten(Matriz, L), max_list(L, Max1), Max is Max1 + 1.
 
 % Retorna o Grupo da posição (I, J)
-getGrupoElem(Id, I, J, Elemento) :- matrizsecundaria(Id, M), nth0(I, M, L), nth0(J, L, Elemento).
+getGrupoElem(Id, I, J, Elemento) :- matrizsecundaria(Id, Matriz), nth0(I, Matriz, L), nth0(J, L, Elemento).
 
-% Retorna o Elemento na posição (I, J) de uma matriz M
-getElemento(M, I, J, Elemento) :- nth0(I, M, L), nth0(J, L, Elemento).
+% Retorna o Elemento na posição (I, J) de uma matriz Matriz
+getElemento(Matriz, I, J, Elemento) :- nth0(I, Matriz, L), nth0(J, L, Elemento).
 
 % Retorna o grupo identificado por NroGrupo
-getGrupo(Id, M, NroGrupo, Grupo) :- findall(Elemento, (getElemento(M, I, J, Elemento), getGrupoElem(Id, I, J, NroGrupo), Elemento \= 0), Grupo).
+getGrupo(Id, Matriz, NroGrupo, Grupo) :- findall(Elemento, (getElemento(Matriz, I, J, Elemento), getGrupoElem(Id, I, J, NroGrupo), Elemento \= 0), Grupo).
 
-
-getAllGrupos(Id, M, Lst) :- bagof(Grupo, (getGrupo(Id, M, Index, Grupo), numGrupos(Id, N), I #>= 0, I #=< N), Lst).
+% Retorna uma lista de listas sendo cada lista interna um grupo, no entanto o Prolog trás tudo como uma lista flat
+getAllGrupos(Id, Matriz, Lst) :- bagof(Grupo, (numGrupos(Id, N), NroGrupo #>= 0, NroGrupo #=< N, getGrupo(Id, Matriz, NroGrupo, Grupo)), Lst).
 
 
 % Checa se há uma sequência númerica em uma lista
