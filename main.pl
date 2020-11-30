@@ -26,8 +26,7 @@ sequenciaValida(Grupo) :- sort(Grupo, GrupoOrdenado), eh_sequencia(GrupoOrdenado
 getAllGrupos(Id, Matriz, Lst) :- bagof(Grupo, (numGrupos(Id, N), NroGrupo #>= 0, NroGrupo #=< N, getGrupo(Id, Matriz, NroGrupo, Grupo)), Lst).
 
 % A estrutura desse predicado foi retirada do site 'https://www.swi-prolog.org/pldoc/man?section=clpfd-sudoku', que contém um resolvedor de sudoku.
-renban(Id, Mp) :- n(Id, N), length(Mp, N),
-                 maplist(same_length(Mp), Mp),
+renban(Id, Mp) :- n(Id, N),
                  append(Mp, Vs), Vs ins 1..N,
                  maplist(all_distinct, Mp),
                  transpose(Mp, MpColunas),
