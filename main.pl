@@ -14,18 +14,18 @@ getElemento(Matriz, I, J, Elemento) :- nth0(I, Matriz, L), nth0(J, L, Elemento).
 % Retorna o grupo identificado por NroGrupo
 getGrupo(Id, Matriz, NroGrupo, Grupo) :- findall(Elemento, (getElemento(Matriz, I, J, Elemento), getGrupoElem(Id, I, J, NroGrupo), Elemento \= 0), Grupo).
 
-% Retorna uma lista de listas sendo cada lista interna um grupo, no entanto o Prolog trás tudo como uma lista flat
-getAllGrupos(Id, Matriz, Lst) :- bagof(Grupo, (numGrupos(Id, N), NroGrupo #>= 0, NroGrupo #=< N, getGrupo(Id, Matriz, NroGrupo, Grupo)), Lst).
-
-
 % Checa se há uma sequência númerica em uma lista
 eh_sequencia([])        :- !.
 eh_sequencia([_])       :- !.
-eh_sequencia([X, Y|Xs]) :- X + 1 #= Y, eh_sequencia([Y|Xs]).
+eh_sequencia([X, Y|T]) :- X + 1 #= Y, eh_sequencia([Y|T]).
 
 % Ordena um grupo e chama eh_sequencia
 sequenciaValida(Grupo) :- sort(Grupo, GrupoOrdenado), eh_sequencia(GrupoOrdenado).
 
+% Retorna uma lista de listas sendo cada lista interna um grupo, no entanto o Prolog trás tudo como uma lista flat
+getAllGrupos(Id, Matriz, Lst) :- bagof(Grupo, (numGrupos(Id, N), NroGrupo #>= 0, NroGrupo #=< N, getGrupo(Id, Matriz, NroGrupo, Grupo)), Lst).
+
+% A estrutura desse predicado foi retirada do site 'https://www.swi-prolog.org/pldoc/man?section=clpfd-sudoku', que contém um resolvedor de sudoku.
 renban(Id, Mp) :- n(Id, N), length(Mp, N),
                  maplist(same_length(Mp), Mp),
                  append(Mp, Vs), Vs ins 1..N,
