@@ -17,7 +17,7 @@ getGrupo(Id, Matriz, NroGrupo, Grupo) :- findall(Elemento, (getElemento(Matriz, 
 % Checa se há uma sequência númerica em uma lista
 eh_sequencia([])        :- !.
 eh_sequencia([_])       :- !.
-eh_sequencia([X, Y|T]) :- X + 1 #= Y, eh_sequencia([Y|T]).
+eh_sequencia([Hx, Hy|T]) :- Hx + 1 #= Hy, eh_sequencia([Hy|T]).
 
 % Ordena um grupo e chama eh_sequencia
 sequenciaValida(Grupo) :- sort(Grupo, GrupoOrdenado), eh_sequencia(GrupoOrdenado).
